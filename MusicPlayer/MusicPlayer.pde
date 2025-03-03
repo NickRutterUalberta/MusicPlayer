@@ -17,7 +17,7 @@ int currentSong = numberOfSongs - numberOfSongs;  //beginning current song as ZE
 boolean isPlaying = false;
 boolean isRepeating = false;
 
-String[] songNames = {"Cycles", "Eureka", "Ghost_Walk", "groove", "Newsroom", "Start_Your_Engines", "The_Simplest", "Beat_Your_Competition"};
+String[] songNames = {"Cycles", "Eureka", "Ghost_Walk", "groove", "Newsroom", "Start_Your_Engines", "The_Simplest", "Beat_Your_Competition"}; // Array with song names
 String[] imageNames = {"Shuffle", "Back", "Play", "Next", "Replay", "Pause"}; //Array with picture names
 PImage[] images; // Images
 int numberOfImages = 7;
