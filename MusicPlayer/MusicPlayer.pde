@@ -6,14 +6,12 @@ import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 import java.util.Collections;
 import java.util.Arrays;
-//
-//See: https://code.compartmental.net/minim/
-//
+
 //Global Variables
 Minim minim;
 int numberOfSongs = 8; //Able to Autodetect based on Pathway
 AudioPlayer[] song = new AudioPlayer[numberOfSongs];
-int currentSong = numberOfSongs - numberOfSongs;  //beginning current song as ZERO
+int currentSong = 0;  //beginning current song as ZERO
 boolean isPlaying = false;
 boolean isRepeating = false;
 
@@ -54,13 +52,14 @@ void draw() {
   
   textAlign(CENTER, CENTER);
   textSize(40);
-  text("Not-Spotify", appWidth/2, appHeight/4);
-  //Top Buttons
+  text("Music Player", appWidth/2, appHeight/4);
   
+  //Top Buttons  
   fill(0); // Set rect color to black
   rect(appWidth*7/24, appHeight/3, appWidth/5, appHeight/5);
   rect(appWidth*61/120, appHeight/3, appWidth/5, appHeight/5); //X, Y, Width, Height
   
+  // Top Display Information
   fill(255); // Set text color to white
   textAlign(CENTER, CENTER);
   textSize(32);
