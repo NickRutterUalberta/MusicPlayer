@@ -9,69 +9,36 @@ import java.util.Arrays;
 
 //Global Variables
 Minim minim;
-int numberOfSongs = 8;
+int numberOfSongs;
 AudioPlayer[] song = new AudioPlayer[numberOfSongs];
-int currentSong = 0;
+int currentSong;
 boolean isPlaying = false;
 boolean isRepeating = false;
-
+String[] songNames = {"Cycles", "Eureka", "Ghost_Walk", "groove", "Newsroom", "Start_Your_Engines", "The_Simplest", "Beat_Your_Competition"}; // Array with song names
+String[] imageNames = {"Shuffle", "Back", "Play", "Next", "Replay", "Pause"}; //Array with picture names
 PImage[] images; // Images
-int numberOfImages = 7;
+int numberOfImages;
 
 float x, y, width1, height1;
-  
+
 //
 void setup() {
   fullScreen();
   background(50);
   minim = new Minim(this);
-  //beginning current song as ZERO
-   // Define file paths
-  String musicPath = "Music/";
-  String imagePath = "Images/";
-
-  // Define file types
-  String musicFileType = ".mp3";
-  String imageFileType = ".PNG";
-
-  // Define song file names
-  String songName0 = "Cycles";
-  String songName1 = "Eureka";
-  String songName2 = "Ghost_Walk";
-  String songName3 = "groove";
-  String songName4 = "Newsroom";
-  String songName5 = "Start_Your_Engines";
-  String songName6 = "The_Simplest";
-  String songName7 = "Beat_Your_Competition";
-
-  // Load each song using string concatenation
-  song[0] = minim.loadFile(musicPath + songName0 + musicFileType);
-  song[1] = minim.loadFile(musicPath + songName1 + musicFileType);
-  song[2] = minim.loadFile(musicPath + songName2 + musicFileType);
-  song[3] = minim.loadFile(musicPath + songName3 + musicFileType);
-  song[4] = minim.loadFile(musicPath + songName4 + musicFileType);
-  song[5] = minim.loadFile(musicPath + songName5 + musicFileType);
-  song[6] = minim.loadFile(musicPath + songName6 + musicFileType);
-  song[7] = minim.loadFile(musicPath + songName7 + musicFileType);
-
-  // Initialize and manually load each image
+  numberOfSongs = 8;
+  numberOfImages = 7;
+  currentSong = 0;  //beginning current song as ZERO
+  // Fill song array with songs
+  for (int i = 0; i < numberOfSongs; i++) {
+    song[i] = minim.loadFile("Music/" + songNames[i] + ".mp3"); // Load music with correct names
+  }
+ 
+  // Fill Image array with images 
   images = new PImage[numberOfImages];
-
-  // Define image file names
-  String imageName0 = "Shuffle";
-  String imageName1 = "Back";
-  String imageName2 = "Play";
-  String imageName3 = "Next";
-  String imageName4 = "Replay";
-  String imageName5 = "Pause";
-
-  // Load images using string concatenation
-  images[0] = loadImage(imagePath + imageName0 + imageFileType);
-  images[1] = loadImage(imagePath + imageName1 + imageFileType);
-  images[2] = loadImage(imagePath + imageName2 + imageFileType);
-  images[3] = loadImage(imagePath + imageName3 + imageFileType);
-  images[4] = loadImage(imagePath + imageName4 + imageFileType);
-  images[5] = loadImage(imagePath + imageName5 + imageFileType);
+  for (int i = 0; i < imageNames.length; i++) {
+    images[i] = loadImage("Images/" + imageNames[i] + ".PNG"); // Load images with correct names
+  }
 } 
 
 void draw() {
@@ -106,7 +73,7 @@ void draw() {
   fill(255); // Set text color to white
   textAlign(CENTER, CENTER);
   textSize(32);
-  text(song[currentSong].getMetaData().title(), songButtonX + songWidth, topButtonY + songHeight);
+  text(songNames[currentSong], songButtonX + songWidth, topButtonY + songHeight);
   text(song[currentSong].getMetaData().author(), artistButtonX + songWidth, topButtonY + songHeight);
   
   //Bottom taskbar
@@ -131,11 +98,9 @@ void draw() {
   int nextWidth = appWidth*123/200;
   int repeatWidth = appWidth*146/200;
   
-   
   image(images[0], shuffleWidth, heightYTop, appWidthTop, appHeightTop);
   image(images[1], backWidth, heightYTop, appWidthTop, appHeightTop);
   if (isPlaying) {
-    fill(255);
     image(images[5], playWidth, heightYTop, playAppTop, appHeightTop);
   } else {
     image(images[2], playWidth, heightYTop, playAppTop, appHeightTop);
@@ -157,78 +122,76 @@ void mousePressed() {
   
   if (mouseX >  shuffleWidth && mouseX < shuffleWidth + appWidthTop &&
       mouseY > heightYTop && mouseY < heightYTop + appHeightTop) {
-      
-      /*
+     
       int randomIndex;
     
       // Manually shuffle each element
       
       randomIndex = int(random(8));
-      String temp0 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[0];
-      songNames[0] = temp0;
-      AudioPlayer tempSong0 = song[randomIndex];
-      song[randomIndex] = song[0];
-      song[0] = tempSong0;
+      String temp0 = songNames[0];
+      songNames[0] = songNames[randomIndex];
+      songNames[randomIndex] = temp0;
+      AudioPlayer tempSong0 = song[0];
+      song[0] = song[randomIndex];
+      song[randomIndex] = tempSong0;
     
-      randomIndex = int(random(8));
-      String temp1 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[1];
-      songNames[1] = temp1;
-      AudioPlayer tempSong1 = song[randomIndex];
-      song[randomIndex] = song[1];
-      song[1] = tempSong1;
+      randomIndex = int(random(7));
+      String temp1 = songNames[1];
+      songNames[1] = songNames[randomIndex];
+      songNames[randomIndex] = temp1;
+      AudioPlayer tempSong1 = song[1];
+      song[1] = song[randomIndex];
+      song[randomIndex] = tempSong1;
     
-      randomIndex = int(random(8));
-      String temp2 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[2];
-      songNames[2] = temp2;
-      AudioPlayer tempSong2 = song[randomIndex];
-      song[randomIndex] = song[2];
-      song[2] = tempSong2;
+      randomIndex = int(random(6));
+      String temp2 = songNames[2];
+      songNames[2] = songNames[randomIndex];
+      songNames[randomIndex] = temp2;
+      AudioPlayer tempSong2 = song[2];
+      song[2] = song[randomIndex];
+      song[randomIndex] = tempSong2;
     
-      randomIndex = int(random(8));
-      String temp3 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[3];
-      songNames[3] = temp3;
-      AudioPlayer tempSong3 = song[randomIndex];
-      song[randomIndex] = song[3];
-      song[3] = tempSong3;
+      randomIndex = int(random(5));
+      String temp3 = songNames[3];
+      songNames[3] = songNames[randomIndex];
+      songNames[randomIndex] = temp3;
+      AudioPlayer tempSong3 = song[3];
+      song[3] = song[randomIndex];
+      song[randomIndex] = tempSong3;
     
-      randomIndex = int(random(8));
-      String temp4 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[4];
-      songNames[4] = temp4;
-      AudioPlayer tempSong4 = song[randomIndex];
-      song[randomIndex] = song[4];
-      song[4] = tempSong4;
+      randomIndex = int(random(4));
+      String temp4 = songNames[4];
+      songNames[4] = songNames[randomIndex];
+      songNames[randomIndex] = temp4;
+      AudioPlayer tempSong4 = song[4];
+      song[4] = song[randomIndex];
+      song[randomIndex] = tempSong4;
     
-      randomIndex = int(random(8));
-      String temp5 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[5];
-      songNames[5] = temp5;
-      AudioPlayer tempSong5 = song[randomIndex];
-      song[randomIndex] = song[5];
-      song[5] = tempSong5;
+      randomIndex = int(random(3));
+      String temp5 = songNames[5];
+      songNames[5] = songNames[randomIndex];
+      songNames[randomIndex] = temp5;
+      AudioPlayer tempSong5 = song[5];
+      song[5] = song[randomIndex];
+      song[randomIndex] = tempSong5;
     
-      randomIndex = int(random(8));
-      String temp6 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[6];
-      songNames[6] = temp6;
-      AudioPlayer tempSong6 = song[randomIndex];
-      song[randomIndex] = song[6];
-      song[6] = tempSong6;
+      randomIndex = int(random(2));
+      String temp6 = songNames[6];
+      songNames[6] = songNames[randomIndex];
+      songNames[randomIndex] = temp6;
+      AudioPlayer tempSong6 = song[6];
+      song[6] = song[randomIndex];
+      song[randomIndex] = tempSong6;
     
-      randomIndex = int(random(8));
-      String temp7 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[7];
-      songNames[7] = temp7;
-      AudioPlayer tempSong7 = song[randomIndex];
-      song[randomIndex] = song[7];
-      song[7] = tempSong7;
-      */
-   }
-   
+      randomIndex = int(random(1));
+      String temp7 = songNames[7];
+      songNames[7] = songNames[randomIndex];
+      songNames[randomIndex] = temp7;
+      AudioPlayer tempSong7 = song[7];
+      song[7] = song[randomIndex];
+      song[randomIndex] = tempSong7;
+  }
+  
   // Check if back button is clicked
   int backWidth = displayWidth*57/200;
   
