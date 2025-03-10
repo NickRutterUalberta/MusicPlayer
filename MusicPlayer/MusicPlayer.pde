@@ -1,3 +1,4 @@
+// Import libraries
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import ddf.minim.effects.*;
@@ -5,7 +6,7 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
-//Global Variables
+// Global Variables
 Minim minim;
 int numberOfSongs = 8;
 AudioPlayer[] song = new AudioPlayer[numberOfSongs];
@@ -13,29 +14,78 @@ int currentSong = 0;
 boolean isPlaying = false;
 boolean isRepeating = false;
 
-PImage[] images; // Images
+PImage image;
 int numberOfImages = 7;
 
-float x, y, width1, height1;
-  
-//
+// Display & UI Layout
+int appWidth, appHeight;
+int white, darkGrey, black;
+
+// Top Display
+float topDisplayX, topDisplayY, topDisplayWidth, topDisplayHeight;
+
+// Top Buttons
+int songButtonX, artistButtonX, topButtonY, topButtonWidth, topButtonHeight;
+int songHeight, songWidth;
+
+// Bottom Taskbar
+int bottomX, bottomY, bottomWidth, bottomHeight;
+
+// Bottom Buttons
+int heightYTop, appHeightTop, appWidthTop, playAppTop;
+int shuffleWidth, backWidth, playWidth, nextWidth, repeatWidth;
+
 void setup() {
   fullScreen();
-  
-  // Background Colour
-  
-  int mediumGrey = 50;
-  background(mediumGrey);
+
+  // Initialize app dimensions
+  appWidth = displayWidth;
+  appHeight = displayHeight;
+
+  // Define colors
+  white = 255;
+  darkGrey = 25;
+  black = 0;
+
+  // Initialize Minim for audio playback
   minim = new Minim(this);
-  //beginning current song as ZERO
-   // Define file paths
+
+  // Top Display
+  topDisplayX = appWidth / 4;
+  topDisplayY = appHeight / 6;
+  topDisplayWidth = appWidth / 2;
+  topDisplayHeight = appHeight * 2 / 5;
+
+  // Top Buttons
+  songButtonX = appWidth * 7 / 24;
+  artistButtonX = appWidth * 61 / 120;
+  topButtonY = appHeight / 3;
+  topButtonWidth = appWidth / 5;
+  topButtonHeight = appHeight / 5;
+  songHeight = appHeight / 10;
+  songWidth = appWidth / 10;
+
+  // Bottom taskbar
+  bottomX = appWidth / 8;
+  bottomY = appHeight * 6 / 10;
+  bottomWidth = appWidth * 3 / 4;
+  bottomHeight = appHeight / 5;
+
+  // Bottom Buttons
+  heightYTop = appHeight * 22 / 35;
+  appHeightTop = appHeight / 7;
+  appWidthTop = appWidth / 10;
+  playAppTop = appWidthTop * 4 / 3;
+
+  shuffleWidth = appWidth * 34 / 200;
+  backWidth = appWidth * 57 / 200;
+  playWidth = appWidth * 87 / 200;
+  nextWidth = appWidth * 123 / 200;
+  repeatWidth = appWidth * 146 / 200;
+
+  // Load Songs
   String musicPath = "Music/";
-  String imagePath = "Images/";
-
-  // Define file types
   String musicFileType = ".mp3";
-  String imageFileType = ".PNG";
-
   // Define song file names
   String songName0 = "Cycles";
   String songName1 = "Eureka";
@@ -46,7 +96,7 @@ void setup() {
   String songName6 = "The_Simplest";
   String songName7 = "Beat_Your_Competition";
 
-  // Load each song using string concatenation
+    // Load each song using string concatenation
   song[0] = minim.loadFile(musicPath + songName0 + musicFileType);
   song[1] = minim.loadFile(musicPath + songName1 + musicFileType);
   song[2] = minim.loadFile(musicPath + songName2 + musicFileType);
@@ -56,108 +106,59 @@ void setup() {
   song[6] = minim.loadFile(musicPath + songName6 + musicFileType);
   song[7] = minim.loadFile(musicPath + songName7 + musicFileType);
 
-  // Initialize and manually load each image
-  images = new PImage[numberOfImages];
-
-  // Define image file names
-  String imageName0 = "Shuffle";
-  String imageName1 = "Back";
-  String imageName2 = "Play";
-  String imageName3 = "Next";
-  String imageName4 = "Replay";
-  String imageName5 = "Pause";
-
-  // Load images using string concatenation
-  images[0] = loadImage(imagePath + imageName0 + imageFileType);
-  images[1] = loadImage(imagePath + imageName1 + imageFileType);
-  images[2] = loadImage(imagePath + imageName2 + imageFileType);
-  images[3] = loadImage(imagePath + imageName3 + imageFileType);
-  images[4] = loadImage(imagePath + imageName4 + imageFileType);
-  images[5] = loadImage(imagePath + imageName5 + imageFileType);
-} 
-
-void draw() {
-  int appWidth;
-  int appHeight;
+  // Load Images
+  //String[] imageNames = {"Shuffle", "Back", "Play", "Next", "Replay", "Pause"};
+  
+  String imagePath = "Images/";
+  String imageFileType = ".PNG";
+  
  
-  int white = 255; 
-  int darkGrey = 25;
-  int black = 0;
-  appWidth = displayWidth;
-  appHeight = displayHeight;
+}
+
+ 
+void draw() {
   
-  //Top Display  
-  float topDisplayX = appWidth/4;
-  float topDisplayY = appHeight/6;
-  float topDisplayWidth = appWidth/2;
-  float topDisplayHeight = appHeight*2/5;
+  //background(black);
   fill(darkGrey);
-  rect(topDisplayX, topDisplayY, topDisplayWidth, topDisplayHeight); // Top Big rectangle
-  fill(white); // Set text color to white
-  
+  rect(topDisplayX, topDisplayY, topDisplayWidth, topDisplayHeight);
+
+  fill(white);
   textAlign(CENTER, CENTER);
   textSize(40);
-  
-  float topTextWidth = appWidth/2;
-  float topTextHeight = appHeight/4;
-  text("Music Player", topTextWidth, topTextHeight);
-  
-  //Top Buttons  
-  int songButtonX = appWidth*7/24;
-  int artistButtonX = appWidth*61/120;
-  int topButtonY = appHeight/3;
-  int topButtonWidth = appWidth/5;
-  int topButtonHeight = appHeight/5;
-  int songHeight = appHeight/10;
-  int songWidth = appWidth/10;
-  
-  fill(black); // Set rect color to black
+  text("Music Player", appWidth / 2, appHeight / 4);
+
+  // Top Buttons
+  fill(black);
   rect(songButtonX, topButtonY, topButtonWidth, topButtonHeight);
-  rect(artistButtonX, topButtonY, topButtonWidth, topButtonHeight); //X, Y, Width, Height
-  
-  // Top Display Information
-  fill(white); // Set text color to white
+  rect(artistButtonX, topButtonY, topButtonWidth, topButtonHeight);
+
+  // Display song info
+  fill(white);
   textAlign(CENTER, CENTER);
   textSize(32);
   text(song[currentSong].getMetaData().title(), songButtonX + songWidth, topButtonY + songHeight);
   text(song[currentSong].getMetaData().author(), artistButtonX + songWidth, topButtonY + songHeight);
-  
-  //Bottom taskbar
-  
-  int bottomX = appWidth/8;
-  int bottomY = appHeight*6/10;
-  int bottomWidth = appWidth*3/4;
-  int bottomHeight = appHeight/5;
-  
-  fill(darkGrey); // Set text color to grey
-  rect(bottomX, bottomY, bottomWidth, bottomHeight); //X, Y, Width, Height
-  
-  //Bottom Buttons
-  int heightYTop = appHeight*22/35;
-  int appHeightTop = appHeight/7;
-  int appWidthTop = appWidth/10;
-  int playAppTop = appWidthTop*4/3;
-  
-  int shuffleWidth = appWidth*34/200;
-  int backWidth = appWidth*57/200;
-  int playWidth = appWidth*87/200;
-  int nextWidth = appWidth*123/200;
-  int repeatWidth = appWidth*146/200;
-  
+
+  // Bottom taskbar
+  fill(darkGrey);
+  rect(bottomX, bottomY, bottomWidth, bottomHeight);
    
-  image(images[0], shuffleWidth, heightYTop, appWidthTop, appHeightTop);
-  image(images[1], backWidth, heightYTop, appWidthTop, appHeightTop);
+  // Bottom Buttons
+  fill(white);
+  rect(shuffleWidth, heightYTop, appWidthTop, appHeightTop);
+  rect(backWidth, heightYTop, appWidthTop, appHeightTop);
+  
   if (isPlaying) {
-    fill(255);
-    image(images[5], playWidth, heightYTop, playAppTop, appHeightTop);
+    rect(playWidth, heightYTop, playAppTop, appHeightTop);
   } else {
-    image(images[2], playWidth, heightYTop, playAppTop, appHeightTop);
+    rect(playWidth, heightYTop, playAppTop, appHeightTop);
   }
-  image(images[3], nextWidth, heightYTop, appWidthTop, appHeightTop);
-  image(images[4], repeatWidth, heightYTop, appWidthTop, appHeightTop);
+
+  rect(nextWidth, heightYTop, appWidthTop, appHeightTop);
+  rect(repeatWidth, heightYTop, appWidthTop, appHeightTop);
   
-  
-} //End draw
+}
+ //End draw
 //
 void mousePressed() {
   
