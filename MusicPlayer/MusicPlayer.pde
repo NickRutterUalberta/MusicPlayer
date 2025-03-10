@@ -4,8 +4,6 @@ import ddf.minim.effects.*;
 import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
-import java.util.Collections;
-import java.util.Arrays;
 
 //Global Variables
 Minim minim;
@@ -23,7 +21,11 @@ float x, y, width1, height1;
 //
 void setup() {
   fullScreen();
-  background(50);
+  
+  // Background Colour
+  
+  int mediumGrey = 50;
+  background(mediumGrey);
   minim = new Minim(this);
   //beginning current song as ZERO
    // Define file paths
@@ -78,16 +80,27 @@ void draw() {
   int appWidth;
   int appHeight;
  
+  int white = 255; 
+  int darkGrey = 25;
+  int black = 0;
   appWidth = displayWidth;
   appHeight = displayHeight;
-  fill(25);
-  //Top Display
-  rect(appWidth/4, appHeight/6, appWidth/2, appHeight*2/5); // Top Big rectangle
-  fill(255); // Set text color to white
+  
+  //Top Display  
+  float topDisplayX = appWidth/4;
+  float topDisplayY = appHeight/6;
+  float topDisplayWidth = appWidth/2;
+  float topDisplayHeight = appHeight*2/5;
+  fill(darkGrey);
+  rect(topDisplayX, topDisplayY, topDisplayWidth, topDisplayHeight); // Top Big rectangle
+  fill(white); // Set text color to white
   
   textAlign(CENTER, CENTER);
   textSize(40);
-  text("Music Player", appWidth/2, appHeight/4);
+  
+  float topTextWidth = appWidth/2;
+  float topTextHeight = appHeight/4;
+  text("Music Player", topTextWidth, topTextHeight);
   
   //Top Buttons  
   int songButtonX = appWidth*7/24;
@@ -98,12 +111,12 @@ void draw() {
   int songHeight = appHeight/10;
   int songWidth = appWidth/10;
   
-  fill(0); // Set rect color to black
+  fill(black); // Set rect color to black
   rect(songButtonX, topButtonY, topButtonWidth, topButtonHeight);
   rect(artistButtonX, topButtonY, topButtonWidth, topButtonHeight); //X, Y, Width, Height
   
   // Top Display Information
-  fill(255); // Set text color to white
+  fill(white); // Set text color to white
   textAlign(CENTER, CENTER);
   textSize(32);
   text(song[currentSong].getMetaData().title(), songButtonX + songWidth, topButtonY + songHeight);
@@ -116,7 +129,7 @@ void draw() {
   int bottomWidth = appWidth*3/4;
   int bottomHeight = appHeight/5;
   
-  fill(25); // Set text color to grey
+  fill(darkGrey); // Set text color to grey
   rect(bottomX, bottomY, bottomWidth, bottomHeight); //X, Y, Width, Height
   
   //Bottom Buttons
@@ -158,75 +171,7 @@ void mousePressed() {
   if (mouseX >  shuffleWidth && mouseX < shuffleWidth + appWidthTop &&
       mouseY > heightYTop && mouseY < heightYTop + appHeightTop) {
       
-      /*
-      int randomIndex;
-    
-      // Manually shuffle each element
-      
-      randomIndex = int(random(8));
-      String temp0 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[0];
-      songNames[0] = temp0;
-      AudioPlayer tempSong0 = song[randomIndex];
-      song[randomIndex] = song[0];
-      song[0] = tempSong0;
-    
-      randomIndex = int(random(8));
-      String temp1 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[1];
-      songNames[1] = temp1;
-      AudioPlayer tempSong1 = song[randomIndex];
-      song[randomIndex] = song[1];
-      song[1] = tempSong1;
-    
-      randomIndex = int(random(8));
-      String temp2 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[2];
-      songNames[2] = temp2;
-      AudioPlayer tempSong2 = song[randomIndex];
-      song[randomIndex] = song[2];
-      song[2] = tempSong2;
-    
-      randomIndex = int(random(8));
-      String temp3 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[3];
-      songNames[3] = temp3;
-      AudioPlayer tempSong3 = song[randomIndex];
-      song[randomIndex] = song[3];
-      song[3] = tempSong3;
-    
-      randomIndex = int(random(8));
-      String temp4 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[4];
-      songNames[4] = temp4;
-      AudioPlayer tempSong4 = song[randomIndex];
-      song[randomIndex] = song[4];
-      song[4] = tempSong4;
-    
-      randomIndex = int(random(8));
-      String temp5 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[5];
-      songNames[5] = temp5;
-      AudioPlayer tempSong5 = song[randomIndex];
-      song[randomIndex] = song[5];
-      song[5] = tempSong5;
-    
-      randomIndex = int(random(8));
-      String temp6 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[6];
-      songNames[6] = temp6;
-      AudioPlayer tempSong6 = song[randomIndex];
-      song[randomIndex] = song[6];
-      song[6] = tempSong6;
-    
-      randomIndex = int(random(8));
-      String temp7 = songNames[randomIndex];
-      songNames[randomIndex] = songNames[7];
-      songNames[7] = temp7;
-      AudioPlayer tempSong7 = song[randomIndex];
-      song[randomIndex] = song[7];
-      song[7] = tempSong7;
-      */
+     
    }
    
   // Check if back button is clicked
