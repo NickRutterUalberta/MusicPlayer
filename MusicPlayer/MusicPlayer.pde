@@ -51,14 +51,14 @@ void setup() {
   minim = new Minim(this);
 
   // Top Display
-  topDisplayX = appWidth / 4;
+  topDisplayX = appWidth / 8;
   topDisplayY = appHeight / 6;
   topDisplayWidth = appWidth / 2;
   topDisplayHeight = appHeight * 2 / 5;
 
   // Top Buttons
-  songButtonX = appWidth * 7 / 24;
-  artistButtonX = appWidth * 61 / 120;
+  songButtonX = appWidth / 6;
+  artistButtonX = appWidth * 46 / 120;
   topButtonY = appHeight / 3;
   topButtonWidth = appWidth / 5;
   topButtonHeight = appHeight / 5;
@@ -111,8 +111,8 @@ void setup() {
   
   String imagePath = "Images/";
   String imageFileType = ".PNG";
+  String imageName = "Groove";
   
- 
 }
 
  
@@ -125,7 +125,7 @@ void draw() {
   fill(white);
   textAlign(CENTER, CENTER);
   textSize(40);
-  text("Music Player", appWidth / 2, appHeight / 4);
+  text("Music Player", appWidth * 3 / 8, appHeight / 4);
 
   // Top Buttons
   fill(black);
