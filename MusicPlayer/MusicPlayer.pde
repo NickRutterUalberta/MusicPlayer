@@ -34,6 +34,20 @@ int bottomX, bottomY, bottomWidth, bottomHeight;
 // Bottom Buttons
 int heightYTop, appHeightTop, appWidthTop, playAppTop;
 int shuffleWidth, backWidth, playWidth, nextWidth, repeatWidth;
+String musicPath = "Music/";
+String musicFileType = ".mp3";
+// Define song file names
+String songName0;
+String songName1;
+String songName2;
+String songName3;
+String songName4;
+String songName5;
+String songName6;
+String songName7;
+
+String imagePath = "Images/";
+String imageFileType = ".jpg";
 
 void setup() {
   fullScreen();
@@ -84,17 +98,17 @@ void setup() {
   repeatWidth = appWidth * 146 / 200;
 
   // Load Songs
-  String musicPath = "Music/";
-  String musicFileType = ".mp3";
+  musicPath = "Music/";
+  musicFileType = ".mp3";
   // Define song file names
-  String songName0 = "Cycles";
-  String songName1 = "Eureka";
-  String songName2 = "Ghost_Walk";
-  String songName3 = "groove";
-  String songName4 = "Newsroom";
-  String songName5 = "Start_Your_Engines";
-  String songName6 = "The_Simplest";
-  String songName7 = "Beat_Your_Competition";
+  songName0 = "Cycles";
+  songName1 = "Eureka";
+  songName2 = "Ghost_Walk";
+  songName3 = "groove";
+  songName4 = "Newsroom";
+  songName5 = "Start_Your_Engines";
+  songName6 = "The_Simplest";
+  songName7 = "Beat_Your_Competition";
 
     // Load each song using string concatenation
   song[0] = minim.loadFile(musicPath + songName0 + musicFileType);
@@ -111,7 +125,7 @@ void setup() {
   
   String imagePath = "Images/";
   String imageFileType = ".PNG";
-  String imageName = "Groove";
+  String imageName = "groove";
   
 }
 
