@@ -48,6 +48,7 @@ String songName7;
 
 String imagePath = "Images/";
 String imageFileType = ".jpg";
+float imageX, imageY, imageWidth, imageHeight;
 
 void setup() {
   fullScreen();
@@ -69,6 +70,12 @@ void setup() {
   topDisplayY = appHeight / 6;
   topDisplayWidth = appWidth / 2;
   topDisplayHeight = appHeight * 2 / 5;
+  
+  // Top Display Image
+  imageX = appWidth *0.63;
+  imageY = appHeight / 6;
+  imageWidth = appWidth * 0.245;
+  imageHeight = appHeight * 2 / 5;
 
   // Top Buttons
   songButtonX = appWidth / 6;
@@ -101,10 +108,10 @@ void setup() {
   musicPath = "Music/";
   musicFileType = ".mp3";
   // Define song file names
-  songName0 = "Cycles";
+  songName0 = "groove";
   songName1 = "Eureka";
   songName2 = "Ghost_Walk";
-  songName3 = "groove";
+  songName3 = "Cycles";
   songName4 = "Newsroom";
   songName5 = "Start_Your_Engines";
   songName6 = "The_Simplest";
@@ -123,15 +130,18 @@ void setup() {
   // Load Images
   //String[] imageNames = {"Shuffle", "Back", "Play", "Next", "Replay", "Pause"};
   
-  String imagePath = "Images/";
-  String imageFileType = ".PNG";
-  String imageName = "groove";
+  imagePath = "Images/";
+  imageFileType = ".jpg";
+  
   
 }
 
  
 void draw() {
-  
+  //if (song[currentSong].getMetaData().title() != null){
+  image = loadImage(imagePath + song[currentSong].getMetaData().title() + imageFileType);
+  image(image, imageX, imageY, imageWidth,imageHeight);  
+  //}
   //background(black);
   fill(darkGrey);
   rect(topDisplayX, topDisplayY, topDisplayWidth, topDisplayHeight);
